@@ -1,0 +1,46 @@
+name: Fix Vercel Build
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: ${{ !contains(github.event.head_commit.message, 'fix: resolve Vercel TypeScript build errors') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fix TypeScript build errors
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          health = Path('src/components/HealthStats/HealthStatsSection.tsx')
+          text = health.read_text()
+          text = text.replace('justify: \'space-between\'', 'justifyContent: \'space-between\'')
+          health.write_text(text)
+
+          settings = Path('src/components/Settings/SettingsModal.tsx')
+          text = settings.read_text()
+          text = text.replace('  Shield,\n', '')
+          text = text.replace('  Plus,\n', '')
+          text = text.replace('  Stethoscope\n', '')
+          text = text.replace('    addDoctorContact,\n', '')
+          text = text.replace('    deleteDoctorContact,\n', '')
+          settings.write_text(text)
+          PY
+
+      - name: Commit fixes and remove temporary workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/components/HealthStats/HealthStatsSection.tsx src/components/Settings/SettingsModal.tsx .github/workflows/fix-vercel-build.yml
+          git rm .github/workflows/fix-vercel-build.yml
+          git commit -m 'fix: resolve Vercel TypeScript build errors'
+          git push
