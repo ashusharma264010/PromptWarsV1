@@ -1,0 +1,440 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap');
+
+:root {
+  /* Color Palette - Senior Friendly High Legibility */
+  --bg-primary: #f4f7fb;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f4f9;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-light: #64748b;
+  
+  --primary: #0284c7; /* Vibrant Trust Blue */
+  --primary-hover: #0369a1;
+  --primary-light: #e0f2fe;
+
+  --accent-medicine: #0d9488; /* Teal */
+  --accent-chores: #8b5cf6; /* Purple */
+  --accent-insurance: #2563eb; /* Royal Blue */
+  --accent-health: #e11d48; /* Crimson / Heart Red */
+  --accent-emergency: #dc2626; /* Deep Emergency Red */
+  --accent-family: #059669; /* Emerald Green */
+
+  --status-normal: #16a34a;
+  --status-normal-bg: #dcfce7;
+  --status-borderline: #d97706;
+  --status-borderline-bg: #fef3c7;
+  --status-abnormal: #dc2626;
+  --status-abnormal-bg: #fee2e2;
+
+  --border-color: #cbd5e1;
+  --focus-ring: 4px solid #0284c7;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.12);
+
+  /* Font Scaling Defaults (Standard = 18px baseline) */
+  --base-font-size: 18px;
+  --title-font-size: 1.5rem;
+  --hero-font-size: 2rem;
+}
+
+/* Scaled Typography Classes */
+body.font-large {
+  --base-font-size: 21px;
+  --title-font-size: 1.75rem;
+  --hero-font-size: 2.25rem;
+}
+
+body.font-extra-large {
+  --base-font-size: 25px;
+  --title-font-size: 2rem;
+  --hero-font-size: 2.6rem;
+}
+
+/* High Contrast Mode Overrides */
+body.high-contrast {
+  --bg-primary: #000000;
+  --bg-card: #121212;
+  --bg-card-hover: #1e1e1e;
+  --text-main: #ffffff;
+  --text-muted: #fef08a; /* Bright yellow */
+  --text-light: #ffffff;
+  --primary: #facc15; /* High visibility yellow */
+  --primary-hover: #eab308;
+  --primary-light: #422006;
+  --border-color: #ffffff;
+  --focus-ring: 5px solid #facc15;
+  --accent-medicine: #2dd4bf;
+  --accent-chores: #c084fc;
+  --accent-insurance: #60a5fa;
+  --accent-health: #fb7185;
+  --accent-emergency: #ef4444;
+  --accent-family: #34d399;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: var(--base-font-size);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+/* Universal Focus States for Accessibility */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* Large Button Standard */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 24px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: var(--radius-lg);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 52px; /* Touch target requirement */
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: #e2e8f0;
+  color: var(--text-main);
+}
+.btn-secondary:hover {
+  background-color: #cbd5e1;
+}
+
+.btn-danger {
+  background-color: var(--accent-emergency);
+  color: #ffffff;
+}
+
+.btn-icon {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Layout Container */
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 16px 80px 16px;
+}
+
+/* Header Navbar */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--border-color);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+body.high-contrast .app-header {
+  background-color: #000000;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Invisible button wrapper around the SVG logo – removes button chrome */
+.header-logo-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  margin: 0;
+  cursor: pointer;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  transition: opacity 0.15s ease;
+  min-height: 48px; /* WCAG touch target */
+}
+.header-logo-btn:hover { opacity: 0.85; }
+.header-logo-btn:focus-visible { outline: var(--focus-ring); outline-offset: 4px; }
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Hides label text on small screens, keeps icon only */
+@media (max-width: 640px) {
+  .hide-mobile { display: none; }
+}
+
+
+/* Top Caregiver Banner */
+.caregiver-banner {
+  background-color: #fef3c7;
+  border: 2px solid #f59e0b;
+  color: #92400e;
+  padding: 10px 16px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+body.high-contrast .caregiver-banner {
+  background-color: #451a03;
+  color: #fef08a;
+  border-color: #fde047;
+}
+
+/* 6-Tile Grid Dashboard */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .tile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dash-tile {
+  background-color: var(--bg-card);
+  border: 3px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.dash-tile:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.tile-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.tile-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.tile-subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* Badge Indicator */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-top: 12px;
+  width: fit-content;
+}
+
+.badge-alert {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+}
+
+.badge-warning {
+  background-color: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde047;
+}
+
+.badge-success {
+  background-color: #dcfce7;
+  color: #15803d;
+  border: 1px solid #86efac;
+}
+
+.badge-info {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #7dd3fc;
+}
+
+/* Sub-section Header & Navigation */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.btn-home {
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  border-radius: var(--radius-lg);
+
+  border: 2px solid #334155;
+}
+.btn-home:hover {
+  background-color: #1e293b;
+}
+
+body.high-contrast .btn-home {
+  background-color: #facc15;
+  color: #000000;
+  border-color: #ffffff;
+}
+
+/* Card Containers */
+.card {
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Form Controls - Large Touch Target */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1.1rem;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-main);
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--primary);
+}
+
+/* Keypad Grid for PIN Login */
+.pin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 320px;
+  margin: 20px auto;
+}
+
+.pin-key {
+  height: 64px;
+  font-size: 1.6rem;
+  font-weight: 800;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+}
+.pin-key:hover {
+  background-color: var(--primary-light);
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.modal-content {
+  background-color: var(--bg-card);
+  border: 3px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
